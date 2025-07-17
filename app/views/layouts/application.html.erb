@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Metadata From Api Spec" %></title>
+    <% service_name = "Metadata from API Spec" %>
+    <title><%= [service_name, content_for(:title)].compact.join(" - ") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,11 +19,44 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app %>
+    <%= stylesheet_link_tag :app, defer: true %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body>
-    <%= yield %>
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+    <%=
+      govuk_header(service_name:) do |header|
+        header.with_navigation_item(
+          text: 'Records',
+          href: records_path,
+          active: current_page?(records_path)
+        )
+      end
+    %>
+
+    <div class="govuk-width-container ">
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-three-quarters">
+            &nbsp;
+            <%= govuk_notification_banner(title_text: 'Notice', text: notice, success: true) if notice.present? %>
+            <%= govuk_notification_banner(title_text: 'Alert', text: alert) if alert.present? %>
+          </div>
+          <div class="govuk-grid-column-one-quarter govuk-!-text-align-right">
+            <%#= user_signed_in? ? logout_button : login_button %>
+          </div>
+        </div>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <%= yield %>
+          </div>
+        </div>
+      </main>
+    </div>
+    <%= render GovukComponent::FooterComponent.new do |footer| %>
+      <%= footer.with_meta_html %>
+    <% end %>
   </body>
 </html>
+

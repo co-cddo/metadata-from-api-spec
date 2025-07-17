@@ -23,5 +23,11 @@ module MetadataFromApiSpec
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.generators do |g|
+      g.view_specs false
+      g.helper false
+      g.routing_specs false
+    end
   end
 end
