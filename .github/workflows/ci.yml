@@ -39,36 +39,36 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-
     services:
       postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+        image: postgres:11-alpine
         ports:
-          - 5432:5432
-        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
-
+          - "5432:5432"
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config google-chrome-stable
-
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Run install
+        uses: borales/actions-yarn@v5
         with:
-          ruby-version: .ruby-version
+          cmd: install # will run `yarn install` command
+
+      # Configure Ruby and Rails environment
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1 # v1.202.0
+        with:
           bundler-cache: true
 
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test test:system
+      # Add or replace database setup steps here
+      - name: Set up database schema
+        run: bin/rails db:schema:load
 
       - name: Build assets
         run: bundle exec rails dartsass:build
