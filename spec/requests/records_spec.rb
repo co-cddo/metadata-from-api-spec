@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.describe "/records", type: :request do
   let(:record) { create :record }
 
+  before do
+    allow(GetUrlContent).to receive(:call).and_return(true)
+  end
+
   describe "GET /index" do
     it "renders a successful response" do
       record

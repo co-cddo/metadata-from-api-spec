@@ -1,4 +1,5 @@
 class RecordsController < ApplicationController
+  after_action :process_record, only: %i[create update]
   # GET /records
   def index
     @records = Record.all
@@ -54,6 +55,14 @@ private
 
   # Only allow a list of trusted parameters through.
   def record_params
-    params.expect(record: %i[url metadata specification])
+    params.expect(record: %i[url])
+  end
+
+  def process_record
+    return unless record.valid?
+
+    GetUrlContent.call(record)
+    record.reload
+    GenerateMetadata.call(record) if record.specification.present?
   end
 end
