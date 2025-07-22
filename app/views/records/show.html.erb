@@ -1,6 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<h2>URL</h2>
+<p><%= @record.url %></p>
 
-<%= render @record %>
+<h2>Metadata</h2>
+<pre>
+<%= JSON.pretty_generate(@record.metadata) if @record.metadata.present? %>
+</pre>
+
+<h2>Specification</h2>
+<pre>
+<%= @record.specification %>
+</pre>
 
 <div>
   <%= link_to "Edit this record", edit_record_path(@record) %> |
@@ -8,3 +17,11 @@
 
   <%= button_to "Destroy this record", @record, method: :delete %>
 </div>
+
+<h2>Process Reports</h2>
+<% @record.process_reports.each do |process_report| %>
+
+<h3><%= process_report.title %></h3>
+<p><%= process_report.detail %></p>
+
+<% end %>

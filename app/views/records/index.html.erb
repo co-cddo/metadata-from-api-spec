@@ -1,16 +1,36 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Records" %>
 
 <h1>Records</h1>
 
 <div id="records">
-  <% @records.each do |record| %>
-    <%= render record %>
-    <p>
-      <%= link_to "Show this record", record %>
-    </p>
-  <% end %>
+<%=
+    govuk_table do |table|
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(
+            text: 'URL'
+          )
+
+          row.with_cell()
+        end
+      end
+
+      table.with_body do |body|
+        @records.each do |record|
+          body.with_row do |row|
+            row.with_cell(
+              text: record.url,
+              html_attributes: { class: 'record-url' }
+            )
+
+            row.with_cell(
+              text: link_to("View record", record, class: "govuk-link")
+            )
+          end
+        end
+      end
+    end
+  %>
 </div>
 
 <%= link_to "New record", new_record_path %>

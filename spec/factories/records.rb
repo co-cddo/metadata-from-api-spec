@@ -6,8 +6,9 @@ FactoryBot.define do
       {
         openapi: "3.0.0",
         info:,
-      }
+      }.to_yaml
     end
+
     transient do
       info do
         {
@@ -16,6 +17,7 @@ FactoryBot.define do
         }
       end
     end
+
     trait :invalid do
       url { "" }
     end
