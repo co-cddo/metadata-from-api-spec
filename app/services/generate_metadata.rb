@@ -37,15 +37,21 @@ class GenerateMetadata
       publisher: "",
       securityClassification: "",
       accessRights: "",
-      distribution: [
-        {
-          title: data.dig(:info, :title),
-          accessURL: record.url,
-          description: data.dig(:info, :description),
-          format: "API",
-        },
-      ],
+      distribution:,
     })
+  end
+
+  def distribution
+    servers = data[:servers]
+    return [] if servers.blank?
+
+    servers.collect do |server|
+      {
+        title: server[:description],
+        accessURL: server[:url],
+        format: "API",
+      }
+    end
   end
 
   def data
