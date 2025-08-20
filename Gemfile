@@ -47,7 +47,7 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
-  gem "rspec-rails", "~> 8.0.1"
+  gem "rspec-rails", "~> 8.0.2"
 
   # Factories used to build objects for specs
   gem "factory_bot_rails"
