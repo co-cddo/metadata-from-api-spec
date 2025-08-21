@@ -1,7 +1,6 @@
 class Organisation < ApplicationRecord
   SOURCE_URL = "https://raw.githubusercontent.com/github/government.github.com/gh-pages/_data/governments.yml".freeze
   GOV_UK_GROUP = "U.K. Central".freeze
-  QUERY = "/search/code?q=openapi+org:co-cddo".freeze
   GITHUB_KEY = Rails.configuration.github_key
 
   scope :gov_uk, -> { where(group: GOV_UK_GROUP) }
@@ -20,7 +19,7 @@ class Organisation < ApplicationRecord
 
   def find_and_create_records
     client = Octokit::Client.new(access_token: Organisation::GITHUB_KEY)
-    data = client.get("/search/code?per_page=50&q=openapi+org:#{name}")
+    data = client.get("/search/code?per_page=50&q=openapi\:+extension:yaml+org:#{name}")
     data[:items].collect do |item|
       url = item[:html_url]
       url.gsub!(/^https:\/\/github\.com/, "https://raw.githubusercontent.com")
