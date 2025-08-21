@@ -59,7 +59,7 @@ RSpec.describe "/records", type: :request do
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
         post records_url, params: { record: attributes_for(:record, :invalid) }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end
@@ -85,7 +85,7 @@ RSpec.describe "/records", type: :request do
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         patch record_url(record), params: { record: attributes_for(:record, :invalid) }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end
