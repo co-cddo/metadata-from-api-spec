@@ -55,7 +55,7 @@ class GenerateMetadata
   end
 
   def data
-    @data ||= YAML.load(record.specification, symbolize_names: true)
+    @data ||= YAML.load(record.specification, symbolize_names: true, permitted_classes: [Time, Date, DateTime, Symbol])
   end
 
   def data_valid?
