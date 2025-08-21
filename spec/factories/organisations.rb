@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :repository do
-    name { Faker::Company.name }
+  factory :organisation do
+    name { Faker::Lorem.word }
     group { Faker::Company.name }
   end
 end

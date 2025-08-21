@@ -29,5 +29,7 @@ module MetadataFromApiSpec
       g.helper false
       g.routing_specs false
     end
+
+    config.github_key = ENV.fetch("GITHUB_KEY", Rails.application.credentials&.github_key)
   end
 end

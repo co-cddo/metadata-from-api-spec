@@ -27,7 +27,7 @@ class RecordsController < ApplicationController
     if record.save
       redirect_to record, notice: "Record was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -36,7 +36,7 @@ class RecordsController < ApplicationController
     if record.update(record_params)
       redirect_to record, notice: "Record was successfully updated.", status: :see_other
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -59,10 +59,6 @@ private
   end
 
   def process_record
-    return unless record.valid?
-
-    GetUrlContent.call(record)
-    record.reload
-    GenerateMetadata.call(record) if record.specification.present?
+    record.process
   end
 end
