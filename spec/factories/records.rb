@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :record do
     url { Faker::Internet.url }
     metadata { info.merge(identifier: SecureRandom.uuid) }
+    organisation
+
     specification do
       {
         openapi: "3.0.0",

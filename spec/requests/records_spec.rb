@@ -66,26 +66,15 @@ RSpec.describe "/records", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:new_attributes) do
-        attributes_for :record
-      end
-
       it "updates the requested record" do
-        patch record_url(record), params: { record: new_attributes }
-        record.reload
-        expect(record.url).to eq(new_attributes[:url])
+        expect(GetUrlContent).to receive(:call).with(record).at_least(:once)
+        expect(GenerateMetadata).to receive(:call).with(record).at_least(:once)
+        patch record_url(record)
       end
 
       it "redirects to the record" do
-        patch record_url(record), params: { record: new_attributes }
+        patch record_url(record), params: {}
         expect(response).to redirect_to(record_url(record))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        patch record_url(record), params: { record: attributes_for(:record, :invalid) }
-        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end

@@ -1,0 +1,33 @@
+<% content_for :title, "Organisations" %>
+
+<h1>Organisations</h1>
+
+<div id="organisations">
+  <%=
+    govuk_table do |table|
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(
+            text: 'Name'
+          )
+
+          row.with_cell()
+        end
+      end
+
+      table.with_body do |body|
+        @organisations.each do |organisation|
+          body.with_row do |row|
+            row.with_cell(
+              text: organisation.name
+            )
+
+            row.with_cell(
+              text: link_to("View organisation's records", organisation, class: "govuk-link")
+            )
+          end
+        end
+      end
+    end
+  %>
+</div>
