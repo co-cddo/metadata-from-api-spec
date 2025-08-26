@@ -1,0 +1,11 @@
+<%= content_for :title, "#{@organisation.name} records" %>
+
+<h1><%= @organisation.name %></h1>
+
+<h2>Records</h2>
+
+<%= render "records/records", records: @organisation.records %>
+
+<%= button_to 'Update records', @organisation, method: :patch %>
+
+

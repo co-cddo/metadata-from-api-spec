@@ -33,11 +33,8 @@ class RecordsController < ApplicationController
 
   # PATCH/PUT /records/1
   def update
-    if record.update(record_params)
-      redirect_to record, notice: "Record was successfully updated.", status: :see_other
-    else
-      render :edit, status: :unprocessable_content
-    end
+    record.process
+    redirect_to record, notice: "Record was successfully updated.", status: :see_other
   end
 
   # DELETE /records/1

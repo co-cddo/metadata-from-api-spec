@@ -28,6 +28,12 @@
     <%=
       govuk_header(service_name:) do |header|
         header.with_navigation_item(
+          text: 'Organisations',
+          href: root_path,
+          active: current_page?(root_path)
+        )
+
+        header.with_navigation_item(
           text: 'Records',
           href: records_path,
           active: current_page?(records_path)

@@ -1,0 +1,34 @@
+<div id="records">
+  <% if records.present? %>
+    <%=
+      govuk_table do |table|
+        table.with_head do |head|
+          head.with_row do |row|
+            row.with_cell(
+              text: 'URL'
+            )
+
+            row.with_cell()
+          end
+        end
+
+        table.with_body do |body|
+          records.each do |record|
+            body.with_row do |row|
+              row.with_cell(
+                text: url_or_title(record),
+                html_attributes: { class: 'record-link' }
+              )
+
+              row.with_cell(
+                text: link_to("View record", record, class: "govuk-link")
+              )
+            end
+          end
+        end
+      end
+    %>
+  <% else %>
+    <p>No records found</p>
+  <% end %>
+</div>

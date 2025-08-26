@@ -1,27 +1,32 @@
-<h2>URL</h2>
-<p><%= @record.url %></p>
+<% if @record.metadata.present? && @record.metadata["title"].present? %>
+  <h2><%= @record.metadata["title"] %></h2>
+  <p><%= @record.metadata["description"] %></p>
+<% else %>
+  <h2>URL</h2>
+  <p><%= @record.url %></p>
+<% end %>
 
-<h2>Metadata</h2>
+<%= link_to "Back to organisation's records", organisation_path(@record.organisation) %>
+
+<h3>Metadata</h3>
 <pre>
 <%= JSON.pretty_generate(@record.metadata) if @record.metadata.present? %>
 </pre>
 
-<h2>Specification</h2>
+<h3>Specification</h3>
 <pre>
 <%= @record.specification %>
 </pre>
 
-<div>
-  <%= link_to "Edit this record", edit_record_path(@record) %> |
-  <%= link_to "Back to records", records_path %>
 
-  <%= button_to "Destroy this record", @record, method: :delete %>
+  <%= button_to "Update Record", @record, method: :patch %>
+
 </div>
 
-<h2>Process Reports</h2>
+<h3>Process Reports</h3>
 <% @record.process_reports.each do |process_report| %>
 
-<h3><%= process_report.title %></h3>
+<h4><%= process_report.title %></h4>
 <p><%= process_report.detail %></p>
 
 <% end %>
