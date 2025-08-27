@@ -1,4 +1,6 @@
 class Record < ApplicationRecord
+  scope :with_metadata, -> { where.not("coalesce(metadata ->> 'title') = ''") }
+
   has_many :process_reports, dependent: :delete_all
   belongs_to :organisation, optional: true
 

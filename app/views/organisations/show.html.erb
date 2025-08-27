@@ -4,7 +4,7 @@
 
 <h2>Records</h2>
 
-<%= render "records/records", records: @organisation.records %>
+<%= render "records/records", records: @organisation.records.with_metadata %>
 
 <%= button_to 'Update records', @organisation, method: :patch %>
 
