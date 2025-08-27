@@ -3,6 +3,31 @@ require "rails_helper"
 RSpec.describe Record, type: :model do
   let(:record) { create :record }
 
+  describe ".with_metadata" do
+    let!(:record) { create :record }
+    subject(:with_metadata) { described_class.with_metadata }
+
+    it "finds the record" do
+      expect(with_metadata).to include(record)
+    end
+
+    context "when record has no metadata" do
+      let!(:record) { create :record, metadata: nil }
+
+      it "does not find the record" do
+        expect(with_metadata).not_to include(record)
+      end
+    end
+
+    context "when record metadata has blank title" do
+      let!(:record) { create :record, metadata: { "title" => "" } }
+
+      it "does not find the record" do
+        expect(with_metadata).not_to include(record)
+      end
+    end
+  end
+
   describe "#process" do
     let(:body) do
       {
