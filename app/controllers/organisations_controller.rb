@@ -11,7 +11,8 @@ class OrganisationsController < ApplicationController
 
   # PATCH/PUT /organisations/1
   def update
-    organisation.find_and_create_records
+    records = organisation.find_and_create_records
+    records.each(&:process) if records.present?
     redirect_to @organisation, notice: "Organisation records update initiated."
   end
 
