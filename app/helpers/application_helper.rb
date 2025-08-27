@@ -8,7 +8,7 @@ module ApplicationHelper
   def render_markdown(text)
     return if text.blank?
 
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, tables: true)
     markdown.render(text).html_safe
   end
 end

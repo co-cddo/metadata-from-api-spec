@@ -49,7 +49,6 @@ RSpec.describe Organisation, type: :model do
 
     it "populates the record url from the raw version of github URL" do
       url = "https://raw.githubusercontent.com/#{organisation.name}/repo_name/path/to/file"
-      p find_and_create_records.last
       expect(find_and_create_records.last.url).to eq(url)
     end
   end
