@@ -39,6 +39,7 @@ gem "govuk-components"
 
 # HTTP client
 gem "faraday"
+gem "faraday-retry"
 
 # Github API client
 gem "octokit"
