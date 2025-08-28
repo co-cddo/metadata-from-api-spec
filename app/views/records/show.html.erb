@@ -1,6 +1,10 @@
 <% if @record.metadata.present? && @record.metadata["title"].present? %>
-  <h2><%= @record.metadata["title"] %></h2>
-  <p><%= render_markdown(@record.metadata["description"]) %></p>
+  <% if @record.metadata["type"] =~ /^openapi/ %>
+    <div id="api-spec" data-url="<%= @record.url %>"></div>
+  <% else %>
+    <h2><%= @record.metadata["title"] %></h2>
+    <p><%= render_markdown(@record.metadata["description"]) %></p>
+  <% end %>
 <% else %>
   <h2>URL</h2>
   <p><%= @record.url %></p>
@@ -18,15 +22,6 @@
 <%= @record.specification %>
 </pre>
 
-
   <%= button_to "Update Record", @record, method: :patch %>
 
 </div>
-
-<h3>Process Reports</h3>
-<% @record.process_reports.each do |process_report| %>
-
-<h4><%= process_report.title %></h4>
-<p><%= process_report.detail %></p>
-
-<% end %>

@@ -3,7 +3,8 @@
   "private": "true",
   "dependencies": {
     "esbuild": "^0.25.6",
-    "govuk-frontend": "^5.11.0"
+    "govuk-frontend": "^5.11.0",
+    "swagger-ui": "^5.27.1"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets"
